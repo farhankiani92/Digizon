@@ -1,0 +1,60 @@
+<!-- digi_slider/templates/digi_slider/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiSlider Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">  <!-- Materialize CSS for styling -->
+    <style>
+        .slider {
+            height: 400px;  /* Set a fixed height for the slider */
+        }
+        .slider img {
+            object-fit: cover;  /* Ensure images cover the slider area */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="center-align">DigiSlider Dashboard</h1>
+
+    {% for device in sliders.values|dictsort:"device_type" %}
+        <h2 class="center-align">{{ device.device_type|title }} Sliders</h2>
+        <div class="slider">
+            <ul class="slides">
+                {% for slider in sliders %}
+                    {% if slider.device_type == device.device_type %}
+                    <li>
+                        <img src="{{ slider.image.url }}" style="background-color: {{ slider.background_color }};"> <!-- Slider image -->
+                        <div class="caption center-align" style="color: {{ slider.text_color }};">
+                            <h3>{{ slider.title }}</h3>  <!-- Slider title -->
+                            <p>Department: {{ slider.device_info.department }}</p>  <!-- Department -->
+                            <p>Building: {{ slider.device_info.building }}</p>  <!-- Building -->
+                            <p>Device: {{ slider.device_info.device }}</p>  <!-- Device -->
+                            <p>Shift: {{ slider.device_info.shift }}</p>  <!-- Shift -->
+                        </div>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.slider');
+        var instances = M.Slider.init(elems, {
+            indicators: true,  // Show indicators
+            height: 400,  // Height of the slider
+            transition: 500,  // Transition duration
+            interval: 6000  // Interval between slides
+        });
+    });
+</script>
+</body>
+</html>
