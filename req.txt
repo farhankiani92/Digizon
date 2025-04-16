@@ -1,2 +1,5 @@
-username - mfarhank
-pass LUX-786
+LUX-786
+
+pip install django
+pip install djangoframework
+pip install django-material
